@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eva bo gos</title>
+  <style>
+    /* Styles généraux */
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-image: url('https://sent.lol/uploads/672dfd862f0fe_IMG_5746.jpg'); /* Image de fond */
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Rectangle flou et transparent */
+    .blurred-rectangle {
+      width: 90%;
+      max-width: 500px;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Boutons d'onglets */
+    .tab-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .tab-button {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      background-color: #8a2be2;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+      margin: 0 5px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .tab-button:hover {
+      background-color: #6a1cb7;
+    }
+    .tab-button.active {
+      background-color: #6a1cb7;
+    }
+
+    /* Contenu des onglets */
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Liste d'exercices */
+    .exercise-list {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+    }
+    .exercise-list li {
+      margin-bottom: 8px;
+    }
+
+    /* Styles des cases à cocher personnalisées */
+    .exercise-item {
+      display: flex;
+      align-items: center;
+      background-color: #e0e0e5;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .exercise-item:hover {
+      background-color: #d0d0d5;
+    }
+    .exercise-item input[type="checkbox"] {
+      display: none;
+    }
+    .exercise-item label {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1em;
+    }
+    .exercise-item input[type="checkbox"]:checked + label {
+      text-decoration: line-through;
+      color: #8a2be2;
+    }
+    .exercise-checkmark {
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      border: 2px solid #8a2be2;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 10px;
+      transition: background-color 0.3s;
+    }
+    .exercise-item input[type="checkbox"]:checked + label .exercise-checkmark {
+      background-color: #8a2be2;
+    }
+
+    /* Bouton pour envoyer le résultat */
+    .submit-button {
+      background: linear-gradient(90deg, #000000, #666666);
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 15px;
+      width: 100%;
+      transition: background 0.3s;
+    }
+    .submit-button:hover {
+      background: linear-gradient(90deg, #333333, #999999);
+    }
+
+    /* Section pour les résultats globaux */
+    .global-results {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      font-size: 0.9em;
+    }
+
+    /* Responsive design */
+    @media (max-width: 480px) {
+      .tab-button {
+        font-size: 0.8em;
+        padding: 8px;
+      }
+      .exercise-item label {
+        font-size: 0.9em;
+      }
+      .submit-button {
+        font-size: 0.9em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Rectangle flou avec onglets -->
+  <div class="blurred-rectangle">
+    <!-- Boutons d'onglets -->
+    <div class="tab-buttons">
+      <div class="tab-button active" onclick="openTab('bras-abdos')">Séance 1 : Bras & Abdos</div>
+      <div class="tab-button" onclick="openTab('dos-avant-bras')">Séance 2 : Dos & Avant-bras</div>
+      <div class="tab-button" onclick="openTab('fessier-jambes')">Séance 3 : Fessiers & Jambes</div>
+    </div>
+
+    
+    <!-- Contenu de chaque séance -->
+    <h3>Échauffement</h3>
+    <ul class="exercise-list">
+      <li class="exercise-item">
+        <input type="checkbox" id="warmup1">
+        <label for="warmup1">
+          <span class="exercise-checkmark"></span>
+          5 min de corde à sauter
+        </label>
+      </li>
+      <li class="exercise-item">
+        <input type="checkbox" id="warmup2">
+        <label for="warmup2">
+          <span class="exercise-checkmark"></span>
+          Étirements du dos et des avant-bras
+        </label>
+      </li>
+      <li class="exercise-item">
+        <input type="checkbox" id="warmup3">
+        <label for="warmup3">
+          <span class="exercise-checkmark"></span>
+          Rotation des bras - 2 séries de 20 répétitions
+        </label>
+      </li>
+    </ul>
+    <div id="bras-abdos" class="tab-content active">
+      <h2>Séance 1 : Bras & Abdos</h2>
+      <ul class="exercise-list">
+        <li class="exercise-item">
+          <input type="checkbox" id="ex1">
+          <label for="ex1">
+            <span class="exercise-checkmark"></span>
+            Pompes - 3 séries de 15
+          </label>
+        </li>
+        <li class="exercise-item">
+          <input type="checkbox" id="ex2">
+          <label for="ex2">
+            <span class="exercise-checkmark"></span>
+            Crunchs - 4 séries de 20
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <div id="dos-avant-bras" class="tab-content">
+      <h2>Séance 2 : Dos & Avant-bras</h2>
+      <ul class="exercise-list">
+        <li class="exercise-item">
+          <input type="checkbox" id="ex3">
+          <label for="ex3">
+            <span class="exercise-checkmark"></span>
+            Tractions - 3 séries de 10
+          </label>
+        </li>
+        <li class="exercise-item">
+          <input type="checkbox" id="ex4">
+          <label for="ex4">
+            <span class="exercise-checkmark"></span>
+            Rowing - 4 séries de 12
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <div id="fessier-jambes" class="tab-content">
+      <h2>Séance 3 : Fessiers & Jambes</h2>
+      <ul class="exercise-list">
+        <li class="exercise-item">
+          <input type="checkbox" id="ex5">
+          <label for="ex5">
+            <span class="exercise-checkmark"></span>
+            Squats - 4 séries de 15
+          </label>
+        </li>
+        <li class="exercise-item">
+          <input type="checkbox" id="ex6">
+          <label for="ex6">
+            <span class="exercise-checkmark"></span>
+            Fentes - 3 séries de 20
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Bouton pour soumettre les résultats -->
+    <button class="submit-button" onclick="sendResults()">Envoyer les résultats</button>
+
+    <!-- Résultats globaux -->
+    <div class="global-results" id="global-results">
+      <h3>Résultats globaux</h3>
+      <p id="results-text">Aucun exercice complété pour l'instant.</p>
+    </div>
+  </div>
+
+  <script>
+    // Fonction pour basculer entre les onglets
+    function openTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.tab-button');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      buttons.forEach(button => button.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      document.querySelector(`[onclick="openTab('${tabId}')"]`).classList.add('active');
+    }
+
+    // Fonction pour envoyer les résultats
+    function sendResults() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      let completedExercises = 0;
+
+      checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+          completedExercises++;
+        }
+      });
+
+      document.getElementById('results-text').innerText = `Vous avez complété ${completedExercises} exercices.`;
+    }
+  </script>
+</body>
+</html>
